@@ -11,12 +11,12 @@ import {
   Table,
   TextField,
   TablePagination,
-  TextareaAutosize, // Añadido para el campo de comentarios
+  TextareaAutosize,
 } from '@mui/material';
 
 const Component = styled(Box)`
   width: 80%;
-  margin: 50px auto;
+  margin: 20px auto;
   & > h4 {
     margin-bottom: 20px;
     text-align: center; 
@@ -48,8 +48,15 @@ const defaultOrders = [
       { id: 1, name: 'Product 1', quantity: 2, price: 49.99 },
       // ... más productos
     ],
+    trackingNumber: 'TN-20231129-1234', // Ejemplo de número de guía
   },
 ];
+
+const generateTrackingNumber = () => {
+  const currentDate = new Date();
+  const uniqueId = Math.floor(Math.random() * 10000);
+  return `TN-${currentDate.getFullYear()}${currentDate.getMonth() + 1}${currentDate.getDate()}-${uniqueId}`;
+};
 
 const Orders = () => {
   const [orders, setOrders] = useState(defaultOrders);
@@ -61,8 +68,9 @@ const Orders = () => {
     totalCost: '',
     shippingAddress: '',
     status: 'Pending',
-    comments: '', // Nuevo campo de comentarios
+    comments: '',
     products: [],
+    trackingNumber: generateTrackingNumber(),
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [editingIndex, setEditingIndex] = useState(-1);
@@ -76,7 +84,11 @@ const Orders = () => {
 
   const addOrder = () => {
     if (editingIndex === -1) {
-      setOrders((prevOrders) => [...prevOrders, newOrder]);
+      const newOrderWithTracking = {
+        ...newOrder,
+        trackingNumber: generateTrackingNumber(),
+      };
+      setOrders((prevOrders) => [...prevOrders, newOrderWithTracking]);
     } else {
       const updatedOrders = [...orders];
       updatedOrders[editingIndex] = newOrder;
@@ -92,8 +104,9 @@ const Orders = () => {
       totalCost: '',
       shippingAddress: '',
       status: 'Pending',
-      comments: '', // Restablecer los comentarios a un valor predeterminado
+      comments: '',
       products: [],
+      trackingNumber: generateTrackingNumber(),
     });
   };
 
@@ -105,6 +118,11 @@ const Orders = () => {
   const removeOrder = (id) => {
     const updatedOrders = orders.filter((order) => order.id !== id);
     setOrders(updatedOrders);
+  };
+
+  const generateReceipt = (order) => {
+    console.log("Generating receipt for order:", order);
+    // Puedes implementar lógica adicional para crear y mostrar el comprobante
   };
 
   const filterOrders = () => {
@@ -129,7 +147,7 @@ const Orders = () => {
     setPaddress(0);
   };
 
-  const actionsColumnWidth = 150;
+  const actionsColumnWidth = 200;
 
   return (
     <Component>
@@ -154,7 +172,8 @@ const Orders = () => {
               <TableCell>Total Cost</TableCell>
               <TableCell>Shipping Address</TableCell>
               <TableCell>Status</TableCell>
-              <TableCell>Comments</TableCell> {/* Nuevo encabezado de columna para comentarios */}
+              <TableCell>Comments</TableCell>
+              <TableCell>Tracking Number</TableCell>
               <TableCell style={{ width: actionsColumnWidth }}>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -228,6 +247,7 @@ const Orders = () => {
                   onChange={handleInputChange}
                 />
               </TableCell>
+              <TableCell>{newOrder.trackingNumber}</TableCell>
               <TableCell>
                 <Button variant="contained" color="success" onClick={addOrder}>
                   {editingIndex === -1 ? 'Add Order' : 'Save'}
@@ -239,14 +259,15 @@ const Orders = () => {
               : filterOrders()
             ).map((order, index) => (
               <TableRow key={order.id}>
-                <TableCell>{order.id}</TableCell>
-                <TableCell>{order.customerName}</TableCell>
-                <TableCell>{order.email}</TableCell>
-                <TableCell>{order.phone}</TableCell>
-                <TableCell>{order.totalCost}</TableCell>
-                <TableCell>{order.shippingAddress}</TableCell>
-                <TableCell>{order.status}</TableCell>
-                <TableCell>{order.comments}</TableCell> {/* Mostrar comentarios en la tabla */}
+                <TableCell>{index === editingIndex ? newOrder.id : order.id}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.customerName : order.customerName}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.email : order.email}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.phone : order.phone}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.totalCost : order.totalCost}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.shippingAddress : order.shippingAddress}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.status : order.status}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.comments : order.comments}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.trackingNumber : order.trackingNumber}</TableCell>
                 <TableCell>
                   <Button
                     variant="contained"
@@ -261,6 +282,13 @@ const Orders = () => {
                     onClick={() => removeOrder(order.id)}
                   >
                     Remove
+                  </Button>
+                  <Button
+                    variant="contained"
+                    color="info"
+                    onClick={() => generateReceipt(order)}
+                  >
+                    Generate Receipt
                   </Button>
                 </TableCell>
               </TableRow>

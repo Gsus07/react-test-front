@@ -22,6 +22,12 @@ const FormComponent = styled(Box)`
   }
 `;
 
+const generateTrackingNumber = () => {
+  const currentDate = new Date();
+  const uniqueId = Math.floor(Math.random() * 10000);
+  return `TN-${currentDate.getFullYear()}${currentDate.getMonth() + 1}${currentDate.getDate()}-${uniqueId}`;
+};
+
 const OrderForm = ({ onSubmit }) => {
   const [formData, setFormData] = useState({
     id: '',
@@ -33,6 +39,7 @@ const OrderForm = ({ onSubmit }) => {
     status: 'Pending',
     comments: '',
     products: [],
+    trackingNumber: generateTrackingNumber(), // Generar automáticamente el número de seguimiento
   });
 
   const handleInputChange = (e) => {
@@ -53,6 +60,7 @@ const OrderForm = ({ onSubmit }) => {
       status: 'Pending',
       comments: '',
       products: [],
+      trackingNumber: generateTrackingNumber(), // Generar automáticamente un nuevo número de seguimiento
     });
   };
 
@@ -148,6 +156,19 @@ const OrderForm = ({ onSubmit }) => {
                 <MenuItem value="Delivered">Delivered</MenuItem>
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              fullWidth
+              type="text"
+              name="trackingNumber"
+              label="Tracking Number"
+              value={formData.trackingNumber}
+              onChange={handleInputChange}
+              required
+              sx={{ backgroundColor: '#E1F4F6' }}
+              readOnlyinputProps={{ readOnly: true }}
+            />
           </Grid>
           <Grid item xs={12}>
             <TextareaAutosize
