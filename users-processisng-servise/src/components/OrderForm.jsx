@@ -14,8 +14,11 @@ import {
 } from '@mui/material';
 
 const FormComponent = styled(Box)`
-  width: 50%;
+  width: 70%;
   margin: 50px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   & > h4 {
     margin-bottom: 20px;
     text-align: center;
