@@ -16,6 +16,9 @@ import {
 
 const Component = styled(Box)`
   width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin: 20px auto;
   & > h4 {
     margin-bottom: 20px;
