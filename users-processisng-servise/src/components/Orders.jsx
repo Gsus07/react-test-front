@@ -44,14 +44,14 @@ const defaultOrders = [
     email: 'john.doe@example.com',
     phone: '555-1234',
     totalCost: 99.99,
-    shippingAddress: '123 Main St',
+    delivery_address: '123 Main St', // Cambiado a delivery_address
     status: 'Pending',
     comments: 'Great customer!',
     products: [
       { id: 1, name: 'Product 1', quantity: 2, price: 49.99 },
       // ... más productos
     ],
-    trackingNumber: 'TN-20231129-1234', // Ejemplo de número de guía
+    delivery_id: 'TN-20231129-1234', // Cambiado a delivery_id
   },
 ];
 
@@ -69,11 +69,11 @@ const Orders = () => {
     email: '',
     phone: '',
     totalCost: '',
-    shippingAddress: '',
+    delivery_address: '', // Cambiado a delivery_address
     status: 'Pending',
     comments: '',
     products: [],
-    trackingNumber: generateTrackingNumber(),
+    delivery_id: generateTrackingNumber(), // Cambiado a delivery_id
   });
   const [searchTerm, setSearchTerm] = useState('');
   const [editingIndex, setEditingIndex] = useState(-1);
@@ -89,7 +89,7 @@ const Orders = () => {
     if (editingIndex === -1) {
       const newOrderWithTracking = {
         ...newOrder,
-        trackingNumber: generateTrackingNumber(),
+        delivery_id: generateTrackingNumber(), // Cambiado a delivery_id
       };
       setOrders((prevOrders) => [...prevOrders, newOrderWithTracking]);
     } else {
@@ -105,11 +105,11 @@ const Orders = () => {
       email: '',
       phone: '',
       totalCost: '',
-      shippingAddress: '',
+      delivery_address: '', // Cambiado a delivery_address
       status: 'Pending',
       comments: '',
       products: [],
-      trackingNumber: generateTrackingNumber(),
+      delivery_id: generateTrackingNumber(), // Cambiado a delivery_id
     });
   };
 
@@ -173,10 +173,10 @@ const Orders = () => {
               <TableCell>Email</TableCell>
               <TableCell>Phone</TableCell>
               <TableCell>Total Cost</TableCell>
-              <TableCell>Shipping Address</TableCell>
+              <TableCell>Delivery Address</TableCell> {/* Cambiado a Delivery Address */}
               <TableCell>Status</TableCell>
               <TableCell>Comments</TableCell>
-              <TableCell>Tracking Number</TableCell>
+              <TableCell>Delivery ID</TableCell> {/* Cambiado a Delivery ID */}
               <TableCell style={{ width: actionsColumnWidth }}>Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -225,8 +225,8 @@ const Orders = () => {
               <TableCell>
                 <input
                   type="text"
-                  name="shippingAddress"
-                  value={newOrder.shippingAddress}
+                  name="delivery_address" // Cambiado a delivery_address
+                  value={newOrder.delivery_address} // Cambiado a delivery_address
                   onChange={handleInputChange}
                 />
               </TableCell>
@@ -250,7 +250,7 @@ const Orders = () => {
                   onChange={handleInputChange}
                 />
               </TableCell>
-              <TableCell>{newOrder.trackingNumber}</TableCell>
+              <TableCell>{newOrder.delivery_id}</TableCell> {/* Cambiado a delivery_id */}
               <TableCell>
                 <Button variant="contained" color="success" onClick={addOrder}>
                   {editingIndex === -1 ? 'Add Order' : 'Save'}
@@ -267,10 +267,10 @@ const Orders = () => {
                 <TableCell>{index === editingIndex ? newOrder.email : order.email}</TableCell>
                 <TableCell>{index === editingIndex ? newOrder.phone : order.phone}</TableCell>
                 <TableCell>{index === editingIndex ? newOrder.totalCost : order.totalCost}</TableCell>
-                <TableCell>{index === editingIndex ? newOrder.shippingAddress : order.shippingAddress}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.delivery_address : order.delivery_address}</TableCell> {/* Cambiado a delivery_address */}
                 <TableCell>{index === editingIndex ? newOrder.status : order.status}</TableCell>
                 <TableCell>{index === editingIndex ? newOrder.comments : order.comments}</TableCell>
-                <TableCell>{index === editingIndex ? newOrder.trackingNumber : order.trackingNumber}</TableCell>
+                <TableCell>{index === editingIndex ? newOrder.delivery_id : order.delivery_id}</TableCell> {/* Cambiado a delivery_id */}
                 <TableCell>
                   <Button
                     variant="contained"

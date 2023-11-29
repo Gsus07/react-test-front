@@ -35,11 +35,11 @@ const OrderForm = ({ onSubmit }) => {
     email: '',
     phone: '',
     totalCost: '',
-    shippingAddress: '',
+    delivery_address: '', // Cambiado a delivery_address
     status: 'Pending',
     comments: '',
     products: [],
-    trackingNumber: generateTrackingNumber(), // Generar automáticamente el número de seguimiento
+    delivery_id: generateTrackingNumber(),
   });
 
   const handleInputChange = (e) => {
@@ -56,11 +56,11 @@ const OrderForm = ({ onSubmit }) => {
       email: '',
       phone: '',
       totalCost: '',
-      shippingAddress: '',
+      delivery_address: '', // Cambiado a delivery_address
       status: 'Pending',
       comments: '',
       products: [],
-      trackingNumber: generateTrackingNumber(), // Generar automáticamente un nuevo número de seguimiento
+      delivery_id: generateTrackingNumber(),
     });
   };
 
@@ -133,9 +133,9 @@ const OrderForm = ({ onSubmit }) => {
             <TextField
               fullWidth
               type="text"
-              name="shippingAddress"
-              label="Shipping Address"
-              value={formData.shippingAddress}
+              name="delivery_address" // Cambiado a delivery_address
+              label="Delivery Address" // Cambiado a Delivery Address
+              value={formData.delivery_address} // Cambiado a delivery_address
               onChange={handleInputChange}
               required
               sx={{ backgroundColor: '#E1F4F6' }}
@@ -161,13 +161,13 @@ const OrderForm = ({ onSubmit }) => {
             <TextField
               fullWidth
               type="text"
-              name="trackingNumber"
-              label="Tracking Number"
-              value={formData.trackingNumber}
+              name="delivery_id" // Cambiado a delivery_id
+              label="Delivery ID" // Cambiado a Delivery ID
+              value={formData.delivery_id} // Cambiado a delivery_id
               onChange={handleInputChange}
               required
               sx={{ backgroundColor: '#E1F4F6' }}
-              readOnlyinputProps={{ readOnly: true }}
+              readOnly
             />
           </Grid>
           <Grid item xs={12}>
