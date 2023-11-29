@@ -18,6 +18,7 @@ const Component = styled(Box)`
   margin: 50px auto;
   & > h4 {
     margin-bottom: 20px;
+    text-align: center; 
   }
   & > div > table > thead {
     background-color: #070099;
@@ -130,7 +131,7 @@ const defaultObj = [
         variant="outlined"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
-        style={{ marginBottom: '10px' }}
+        style={{ marginBottom: '10px', backgroundColor: '#E1F4F6' }} 
         className="searchInput"
       />
       <Box>
